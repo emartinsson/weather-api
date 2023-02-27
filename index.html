@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="search">
+            <input class="search-bar" type="text">
+            <button id="addWeatherButton">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+        <div class="weather-location">
+            <p>Results for <span></span></p>
+        </div>
+        <div class="weather-main">
+            <div class="weather-left">
+                <i class="fa-solid fa-cloud fa-2xl"></i>
+                <h2 class="weather-temp"></h2>
+                <div class="weather-info">
+                    <p>Precipitation: <span id="precip"></span></p>
+                    <p>Humidity: <span id="humid"></span></p>
+                    <p>Wind: <span id="wind"></span></p>
+                </div>
+            </div>
+            <div class="weather-right">
+                <h2>Weather</h2>
+                <p id="time"></p>
+                <p id="description"></p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="main.js"></script>
+</html>
