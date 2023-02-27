@@ -1,0 +1,117 @@
+
+:root {
+    --bg_main: #0a1f44;
+    --text_light: #fff;
+    --text_med: #53627c;
+    --text_dark: #1e2432;
+    --red: #ff1e42;
+    --darkred: #c3112d;
+    --orange: #ff8c00;
+    --black: #000000;
+}
+  
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: normal;
+}
+
+button {
+    cursor: pointer;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    color: var(--text_light);
+    background-image: url("https://source.unsplash.com/v7daTKlZzaw");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+.container{
+    margin: 4rem auto;
+    max-width: 420px;
+    width: 100%;
+    background-color: #000000a5;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+.search{
+    display: flex;
+}
+
+.search input{
+    width: 100%;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    background-color: var(--text_dark);
+    color: var(--text_light);
+}
+
+.weather-location{
+    margin-top: 1rem;
+}
+
+.weather-location span{
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.search button{
+    margin-left: 0.5rem;
+    border-radius: 50%;
+    padding: 0.5rem;
+    background-color: #fff;
+    outline: none;
+    border: none;
+    color: var(--black);
+}
+
+.weather-main{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.weather-left{
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.weather-left i{
+    height: 60px;
+}
+
+.weather-left h2{
+    font-size: 1.5rem;
+}
+
+.weather-left p, .weather-right p{
+    font-size: 0.8rem;
+    color: var(--text_med);
+}
+
+.weather-main.loading{
+    visibility: hidden;
+    position: relative;
+}
+
+.weather-location.loading{
+    visibility: hidden;
+}
+
+.weather-main.loading:after{
+    visibility: visible;
+    content: "Loading...";
+    position: absolute;
+    top: 0px;
+}
