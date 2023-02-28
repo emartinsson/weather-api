@@ -36,7 +36,7 @@ body {
     max-width: 420px;
     width: 100%;
     background-color: #000000a5;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 1rem;
 }
 
@@ -78,7 +78,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .weather-left{
@@ -96,6 +96,7 @@ body {
 }
 
 .weather-left p, .weather-right p{
+    margin-top: 0.2rem;
     font-size: 0.8rem;
     color: var(--text_med);
 }
@@ -109,9 +110,52 @@ body {
     visibility: hidden;
 }
 
-.weather-main.loading:after{
+.weather-main.loading::after{
     visibility: visible;
     content: "Loading...";
     position: absolute;
     top: 0px;
 }
+
+#weather-logo{
+    width: 35px;
+}
+
+
+.search-error p{
+    font-size: 1rem;
+    font-weight: bold;
+    color: #c3112d;
+}
+
+
+.temp-unit{
+    display: inline-block;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    vertical-align: top;
+}
+
+.temp-c{
+    display: inline;
+}
+
+.temp-f{
+    display: none;
+}
+
+
+#celsius,#fahrenheit{
+    cursor: pointer;
+}
+
+.gray-text{
+    color: var(--text_med);
+}
+
+
+
+#addWeatherButton:active{
+    box-shadow: 3px 3px 6px #fc894d;
+}
+
