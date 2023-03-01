@@ -22,16 +22,19 @@
         </div>
         <div class="weather-main">
             <div class="weather-left">
-                <image id="weather-logo"></i>
-                <div class="temp-unit">
-                    <span class="temp-c"></span>
-                    <span class="temp-f"></span>
+                <div class="weather-temp">
+                    <image id="weather-logo"></i>
+                        <div class="temp-unit">
+                            <span class="temp-c"></span>
+                            <span class="temp-f"></span>
+                        </div>
+                        <div class="temp">
+                            <a id="celsius">&#8451;</a>
+                            <span>&#124;</span>
+                            <a id="fahrenheit" class="gray-text">&#8457;</a>
+                        </div>
                 </div>
-                <div class="temp">
-                    <a id="celsius">&#8451;</a>
-                    <span>&#124;</span>
-                    <a id="fahrenheit" class="gray-text">&#8457;</a>
-                </div>
+
                 <div class="weather-info">
                     <p>Precipitation: <span id="precip"></span></p>
                     <p>Humidity: <span id="humid"></span></p>
@@ -44,6 +47,9 @@
                 <p id="description"></p>
             </div>
         </div>
+    </div>
+    <div class="gif-div">
+        <img src="" alt="">
     </div>
 </body>
 <script src="main.js"></script>
