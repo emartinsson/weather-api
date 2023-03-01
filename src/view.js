@@ -1,4 +1,4 @@
-import { fetchCoordinates, fetchCurrentWeather, HttpError} from "./apifunctions";
+import { fetchCoordinates, fetchCurrentWeather, HttpError, fetchGif} from "./apifunctions";
 import { kelvinToCelsius, getCurrentDayAndTime, celsiusToFahrenheit } from "./helpFunctions";
 import { Coordinate } from "./logic";
 import { getCountry } from "./countries";
@@ -20,12 +20,23 @@ const getDataFromForm = () => {
 }
 
 
+const renderGif = async (weatherData) => {
+    const gifDivImg = document.querySelector(".gif-div img");
+    try{
+        const gifName  = getGifName(weatherData);
+        const gifResponse = await fetchGif(gifName);
+        gifDivImg.src = gifResponse.data.images.original.url;
+    }
+    catch(error){
+        console.error(error);
+    }
+}
 
 //Renders weather data
 const renderWeatherData = (weatherData) => {
     const location = `${weatherData.name}, ${getCountry(weatherData.sys.country)}`
     const humidity = weatherData.main.humidity;
-    const precipitation = weatherData.hasOwnProperty("rain") ? weatherData.rain["1h"] : 0;
+    const precipitation = getPrecipitation(weatherData);
     const wind = Math.round(weatherData.wind.speed);
     const tempC = Math.round(weatherData.main.temp);
     const tempF = Math.round(celsiusToFahrenheit(weatherData.main.temp));
@@ -34,6 +45,7 @@ const renderWeatherData = (weatherData) => {
     const icon = weatherData.weather[0].icon;
     const imgSrc = "https://openweathermap.org/img/w/";
     const imgFormat = ".png";
+
 
     document.querySelector("#precip").innerText = `${precipitation} mm`;
     document.querySelector("#humid").innerText = `${humidity}%`;
@@ -46,6 +58,16 @@ const renderWeatherData = (weatherData) => {
     document.getElementById("weather-logo").src = imgSrc + icon + imgFormat;
 }
 
+//Retrieve precipitation from rain or snow from weatherdata json
+const getPrecipitation = (weatherData) => {
+    let precipitation = 0;
+    if (weatherData.hasOwnProperty("rain")){
+        precipitation = weatherData.rain["1h"];
+    } else if (weatherData.hasOwnProperty("snow")){
+        precipitation = weatherData.snow["1h"];
+    }
+    return precipitation;
+}
 
 //Help function to display/remove loading and error text
 const toggleWeatherFunctions = (() => {
@@ -76,6 +98,20 @@ const toggleWeatherFunctions = (() => {
 })();
 
 
+//Get gif name from weatherdata code
+const getGifName = (weatherData) => {
+    const weatherCode = weatherData.weather[0].id;
+    let gifName = "weather";
+    if (weatherCode < 300) gifName = "Thunderstorm";
+    else if (weatherCode < 400 ) gifName = "Drizzle";
+    else if (weatherCode < 600 ) gifName = "Rain";
+    else if (weatherCode < 700 ) gifName = "Snow";
+    else if (weatherCode < 800 ) gifName = "Weather";
+    else if (weatherCode === 800) gifName = "Sunny";
+    else if (weatherCode < 900) gifName = "Cloudy"
+    return gifName
+}
+
 
 //Logic of getting weather.
 const getWeather = async (locationName) => {
@@ -90,7 +126,8 @@ const getWeather = async (locationName) => {
         const weatherData = await fetchCurrentWeather(coordinate);
 
         //Render retrieved weather data
-        renderWeatherData(weatherData);
+        renderWeatherData(weatherData); 
+        renderGif(weatherData)
 
         //Clear error msg if there is one
         toggleWeatherFunctions.clearErrorMsg();

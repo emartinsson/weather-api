@@ -1,4 +1,17 @@
-const WEATHER_API_KEY = "4cc8824003df3e4e77c9849cabb23c5b";;
+const WEATHER_API_KEY = "4cc8824003df3e4e77c9849cabb23c5b";
+const GIPHY_API_KEY = "tPctTVW9LQGZhKCy9fHhM1kJI4IA24WB";
+
+const fetchGif = async (gifName) => {
+    const url = `https://api.giphy.com/v1/gifs/translate?api_key=${GIPHY_API_KEY}&s=${gifName}`;
+    let response = await fetch(url);
+
+    if (response.status == 200){
+        return response.json();
+    }else{
+        throw new HttpError(response);
+    }
+}
+
 
 //Httperror class.
 class HttpError extends Error {
@@ -37,4 +50,4 @@ const fetchCurrentWeather = async (coordinate) => {
 }
 
 
-export{fetchCoordinates, fetchCurrentWeather, HttpError}
+export{fetchCoordinates, fetchCurrentWeather, HttpError, fetchGif}
