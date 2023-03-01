@@ -1,6 +1,4 @@
-import { fetchCoordinates, fetchCurrentWeather, HttpError, fetchGif} from "./apifunctions";
-import { kelvinToCelsius, getCurrentDayAndTime, celsiusToFahrenheit } from "./helpFunctions";
-import { Coordinate } from "./logic";
+import {getCurrentDayAndTime, celsiusToFahrenheit } from "./helpFunctions";
 import { getCountry } from "./countries";
 
 //BRYT UT CONTROLLER FRÅN DENNA...
@@ -20,16 +18,9 @@ const getDataFromForm = () => {
 }
 
 
-const renderGif = async (weatherData) => {
+const renderGif = async (gifName) => {
     const gifDivImg = document.querySelector(".gif-div img");
-    try{
-        const gifName  = getGifName(weatherData);
-        const gifResponse = await fetchGif(gifName);
-        gifDivImg.src = gifResponse.data.images.original.url;
-    }
-    catch(error){
-        console.error(error);
-    }
+    gifDivImg.src = gifResponse.data.images.original.url;
 }
 
 //Renders weather data
@@ -98,66 +89,6 @@ const toggleWeatherFunctions = (() => {
 })();
 
 
-//Get gif name from weatherdata code
-const getGifName = (weatherData) => {
-    const weatherCode = weatherData.weather[0].id;
-    let gifName = "weather";
-    if (weatherCode < 300) gifName = "Thunderstorm";
-    else if (weatherCode < 400 ) gifName = "Drizzle";
-    else if (weatherCode < 600 ) gifName = "Rain";
-    else if (weatherCode < 700 ) gifName = "Snow";
-    else if (weatherCode < 800 ) gifName = "Weather";
-    else if (weatherCode === 800) gifName = "Sunny";
-    else if (weatherCode < 900) gifName = "Cloudy"
-    return gifName
-}
-
-
-//Logic of getting weather.
-const getWeather = async (locationName) => {
-    //Add loading text
-    toggleWeatherFunctions.loadingWeather();
-    try{
-        //Fetch coordinate from location name using geolocation api
-        const geodata = await fetchCoordinates(locationName);
-        //Use built in coordinate to store lat and longitude
-        let coordinate = Coordinate(geodata[0].lat, geodata[0].lon);
-        //Fetch weatherdata from coordinates using openweather api
-        const weatherData = await fetchCurrentWeather(coordinate);
-
-        //Render retrieved weather data
-        renderWeatherData(weatherData); 
-        renderGif(weatherData)
-
-        //Clear error msg if there is one
-        toggleWeatherFunctions.clearErrorMsg();
-    } catch(error) {
-        if (error instanceof HttpError && error.response.status == 404){
-            alert("Error 404");
-        }else{
-            //Display error text if error occured
-            toggleWeatherFunctions.displayError();
-        }
-    }
-    //Remove loading text
-    toggleWeatherFunctions.removeLoadingWeather();
-}
-
-//Retrieving locantion name form and calling getweather
-const data = async () => {
-    const locationName = getDataFromForm();
-    if (locationName === ""){
-        return;
-    }
-    await getWeather(locationName)
-}
-
-//Initial weather location that isu sed
-const startWeather = async () => {
-    const startLocation = "Luleå";
-    await getWeather(startLocation);
-}
-
 
 //Function to toggle display state for fahrenheit / celsius
 const temperatureSwitcher = (() => {
@@ -190,29 +121,26 @@ const temperatureSwitcher = (() => {
 
 
 //Eventlistener
-const initialRender = async() => {
+const initialRender = async (callback) => {
     const addWeatherBtn = document.querySelector("#addWeatherButton");
     const input = document.querySelector(".search-bar");
     const tempDiv = document.querySelector(".temp");
 
     addWeatherBtn.addEventListener("click", async () => {
-        await data();
+        await callback();
     })
     input.addEventListener("keydown", async (e) => {
         if (e.key === "Enter"){
-            await data();
+            await callback();
         }
     });
 
     tempDiv.addEventListener("click", (e) => {
         temperatureSwitcher.toggleTemperature(e);
     })
-    
-
-    await startWeather();
 }
 
 
 
 
-export {initialRender}
+export {initialRender,getDataFromForm, renderGif, renderWeatherData, toggleWeatherFunctions}

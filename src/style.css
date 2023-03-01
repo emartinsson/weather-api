@@ -29,7 +29,7 @@ body {
     background-image: url("https://source.unsplash.com/v7daTKlZzaw");
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;

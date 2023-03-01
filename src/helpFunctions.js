@@ -6,16 +6,17 @@ const getCurrentDayAndTime = () => {
 }
 
 
-//Returns celsius from fahrenheit, rounded up
+//Returns celsius from fahrenheit
 const kelvinToCelsius = (temp) => {
     return (temp-273.15);
 }
 
-
+//Convert celsius to fahrenheit
 const celsiusToFahrenheit = (temp) => {
     return (temp*9/5)+32;
 }
 
+//Convert fahrenheit to celisus
 const fahrenheitToCelsius = (temp) => {
     return (temp-32)*5/9;
 }
