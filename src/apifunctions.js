@@ -1,5 +1,4 @@
 const WEATHER_API_KEY = "4cc8824003df3e4e77c9849cabb23c5b";
-const GIPHY_API_KEY = "tPctTVW9LQGZhKCy9fHhM1kJI4IA24WB";
 
 const fetchGif = async (gifName) => {
     const url = `https://api.giphy.com/v1/gifs/translate?api_key=${GIPHY_API_KEY}&s=${gifName}`;

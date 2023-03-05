@@ -1,5 +1,6 @@
 
 
+//Get country name from country:s abbreviation
 const getCountry = (abbreviation) =>{
     return countryList[abbreviation];
 }
